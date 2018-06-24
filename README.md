@@ -39,4 +39,4 @@ This demonstrates a regression test suite.
 
 This domain demonstrates the problem file templating and a programatic generation of scalability test suite.
 
-Run the `generate_tests.py` script and refresh the _Test Explorer_. You will see a list of _Scalability tests_ for your planner. Run the suite to see how your planner struggles (or not :-]). See how the _.json_ files are concise to capture the test cases. Check the logic in the _problem.pddl_ template. 
+Run the `generate_tests.py` script and refresh the _Test Explorer_. You will see a list of _Scalability tests_ for your planner. Run the suite to see how your planner struggles (or does not :-]). See how the _.json_ files are concise to capture the test case definitions. Check the logic in the _problem.pddl_ template.
