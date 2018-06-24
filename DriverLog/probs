@@ -1,0 +1,26 @@
+# simpler problems
+dlgen -n 7431 3 2 2 2 100 > pfile1
+dlgen -n 5435 3 2 3 2 100 > pfile2
+dlgen -n 2123 3 2 4 2 100 > pfile3
+dlgen -n 1211 3 3 4 2 100 > pfile4
+dlgen -n 1233 3 3 5 2 100 > pfile5
+dlgen -n 8765 3 3 5 3 100 > pfile6
+dlgen -n 6171 3 3 6 3 100 > pfile7
+dlgen -n 2311 3 3 7 3 100 > pfile8
+
+# Now more locations
+dlgen -n 7323 5 2 6 3 100 > pfile9
+dlgen -n 2122 6 2 6 3 100 > pfile10
+dlgen -n 2121 7 2 6 3 100 > pfile11
+dlgen -n 1111 10 2 6 3 100 > pfile12
+dlgen -n 4321 12 2 6 3 100 > pfile13
+
+# And more stuff
+dlgen -n 2222 10 3 6 3 100 > pfile14
+dlgen -n 3333 12 4 8 4 100 > pfile15
+dlgen -n 6541 15 5 10 5 100 > pfile16
+dlgen -n 6788 16 5 15 5 100 > pfile17
+dlgen -n 6543 20 5 20 5 100 > pfile18
+dlgen -n 7654 20 5 25 5 100 > pfile19
+dlgen -n 1764 20 8 25 6 100 > pfile20
+

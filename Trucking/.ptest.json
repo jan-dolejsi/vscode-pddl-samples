@@ -1,0 +1,14 @@
+{
+    "defaultDomain": "trucks.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {   
+            "label": "Problem #1",
+            "problem": "trucksp0.pddl"
+        },
+        {
+            "label": "Problem #2",
+            "problem": "drivingProbB.pddl"
+        }
+    ]
+}

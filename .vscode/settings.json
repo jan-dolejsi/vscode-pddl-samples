@@ -1,0 +1,7 @@
+{
+    "json.schemas": [
+        {
+            "url": "./DriverLog/driverlog-schema.json"
+        }
+    ]
+}

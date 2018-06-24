@@ -1,0 +1,35 @@
+{
+    "defaultDomain": "blocksworld.pddl",
+    "defaultProblem": "problem.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {
+            "label": "[C][BA] -> [BCA]",
+            "preProcess": {
+                "kind": "nunjucks",
+                "data": "p0.json"
+            }
+        },
+        {
+            "label": "[CDE][BA] -> [ACB]",
+            "preProcess": {
+                "kind": "nunjucks",
+                "data": "p1.json"
+            }
+        },
+        {
+            "label": "[BADEK][CFA][GHJ] -> [KJIHGFEDCBA]",
+            "preProcess": {
+                "kind": "nunjucks",
+                "data": "p2.json"
+            }
+        },
+        {
+            "label": "Jinja2: [BADEK][CFA][GHJ] -> [KJIHGFEDCBA]",
+            "preProcess": {
+                "kind": "jinja2",
+                "data": "p2.json"
+            }
+        }
+    ]
+}

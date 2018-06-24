@@ -1,0 +1,18 @@
+{
+    "name": "p2",
+    "blocks": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+    "init": {
+        "towers": [
+            ["B", "A", "D", "E", "K"], 
+            ["C", "F", "I"], 
+            ["G", "H", "J"]
+        ],
+        "hand":{
+            "empty": true,
+            "holding": null
+        }
+    },
+    "goal": {
+        "towers": [["K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "A"]]
+    }
+}

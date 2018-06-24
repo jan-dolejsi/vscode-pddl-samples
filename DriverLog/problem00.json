@@ -1,0 +1,60 @@
+{
+    "$schema": "./driverlog-schema.json",
+    "name": "driverlog-1-1-1",
+    "locations": [
+        "lot0", "lot1",
+        "bldg0", "bldg1"
+    ],
+    "drivers": [
+        {
+            "name": "driver1",
+            "initLocation": "bldg1",
+            "goalLocation": "lot1",
+            "walkingSpeed": 1
+        }
+    ],
+    "trucks": [
+        {
+            "name": "truck1",
+            "initLocation": "lot0",
+            "goalLocation": "lot0",
+            "empty": true
+        }
+    ],
+    "packages": [
+        {
+            "name": "package1",
+            "initLocation": "lot0",
+            "goalLocation": "lot1"
+        }
+    ],
+    "paths": [
+        {
+            "a": "lot0", 
+            "b": "bldg0",
+            "timeToWalk": 43
+        },
+        {
+            "a": "lot1", 
+            "b": "bldg0",
+            "timeToWalk": 80
+        },
+        {
+            "a": "lot0", 
+            "b": "bldg1",
+            "timeToWalk": 29
+        },
+        {
+            "a": "lot1", 
+            "b": "bldg1",
+            "timeToWalk": 79
+        }
+    ],
+    "links": [
+        {
+            "a": "lot0",
+            "b": "lot1",
+            "timeToDrive": 24
+        }
+    ]
+}

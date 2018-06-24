@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "validate",
+            "type": "shell",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "command": "${config:pddl.validatorPath} -v -t ${config:pddlPlanner.epsilonTimeStep} domain.pddl \"${fileBasenameNoExtension}.pddl\" \"${fileBasename}\"",
+            "problemMatcher": []
+        },
+        {
+            "label": "validate (with report)",
+            "type": "shell",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "command": "${config:pddl.validatorPath} -f \"${fileBasenameNoExtension}\" -v -t ${config:pddlPlanner.epsilonTimeStep} domain.pddl \"${fileBasenameNoExtension}.pddl\" \"${fileBasename}\"",
+            "problemMatcher": []
+        }
+    ]
+}

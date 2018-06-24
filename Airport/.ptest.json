@@ -1,0 +1,18 @@
+
+{
+    "defaultDomain": "domain.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {   
+            "label": "Single aircraft should be disembarked",
+            "problem": "1plane.pddl",
+            "expectedPlans": [
+                "1plane-expected.plan"
+            ]
+        },
+        {   
+            "label": "10 aircrafts should be land and depart within an hour",
+            "problem": "10planes.pddl"
+        }
+    ]
+}

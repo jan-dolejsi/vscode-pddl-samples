@@ -1,0 +1,14 @@
+{
+    "name": "p0",
+    "blocks": ["A", "B", "C", "D", "E"],
+    "init": {
+        "towers": [["C", "D", "E"], ["B", "A"]],
+        "hand":{
+            "empty": true,
+            "holding": null
+        }
+    },
+    "goal": {
+        "towers": [["A", "C", "B"]]
+    }
+}

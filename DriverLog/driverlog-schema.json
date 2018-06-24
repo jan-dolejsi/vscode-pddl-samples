@@ -1,0 +1,236 @@
+{
+  "$id": "http://http://pddl-schema.org/samples/driverlog.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "name": {
+      "$id": "/properties/name",
+      "type": "string",
+      "title": "The Name Schema ",
+      "default": "",
+      "examples": [
+        "driverlog-1-1-1"
+      ]
+    },
+    "locations": {
+      "$id": "/properties/locations",
+      "type": "array",
+      "items": {
+        "$id": "/properties/locations/items",
+        "type": "string",
+        "title": "The location items Schema ",
+        "default": "",
+        "examples": [
+          "lot0",
+          "lot1",
+          "bldg0",
+          "bldg1"
+        ]
+      }
+    },
+    "drivers": {
+      "$id": "/properties/drivers",
+      "type": "array",
+      "items": {
+        "$id": "/properties/drivers/items",
+        "type": "object",
+        "properties": {
+          "name": {
+            "$id": "/properties/drivers/items/properties/name",
+            "type": "string",
+            "title": "The Name Schema ",
+            "default": "",
+            "examples": [
+              "driver1"
+            ]
+          },
+          "initLocation": {
+            "$id": "/properties/drivers/items/properties/initLocation",
+            "type": "string",
+            "title": "The Initlocation Schema ",
+            "default": "",
+            "examples": [
+              "bldg1"
+            ]
+          },
+          "goalLocation": {
+            "$id": "/properties/drivers/items/properties/goalLocation",
+            "type": "string",
+            "title": "The Goallocation Schema ",
+            "default": "",
+            "examples": [
+              "lot1"
+            ]
+          },
+          "walkingSpeed": {
+            "$id": "/properties/drivers/items/properties/walkingSpeed",
+            "type": "integer",
+            "title": "The Walkingspeed Schema ",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    "trucks": {
+      "$id": "/properties/trucks",
+      "type": "array",
+      "items": {
+        "$id": "/properties/trucks/items",
+        "type": "object",
+        "properties": {
+          "name": {
+            "$id": "/properties/trucks/items/properties/name",
+            "type": "string",
+            "title": "The Name Schema ",
+            "default": "",
+            "examples": [
+              "truck1"
+            ]
+          },
+          "initLocation": {
+            "$id": "/properties/trucks/items/properties/initLocation",
+            "type": "string",
+            "title": "The Initlocation Schema ",
+            "default": "",
+            "examples": [
+              "lot0"
+            ]
+          },
+          "goalLocation": {
+            "$id": "/properties/trucks/items/properties/goalLocation",
+            "type": "string",
+            "title": "The Goallocation Schema ",
+            "default": "",
+            "examples": [
+              "lot0"
+            ]
+          },
+          "empty": {
+            "$id": "/properties/trucks/items/properties/empty",
+            "type": "boolean",
+            "title": "The Empty Schema ",
+            "default": false,
+            "examples": [
+              true
+            ]
+          }
+        }
+      }
+    },
+    "packages": {
+      "$id": "/properties/packages",
+      "type": "array",
+      "items": {
+        "$id": "/properties/packages/items",
+        "type": "object",
+        "properties": {
+          "name": {
+            "$id": "/properties/packages/items/properties/name",
+            "type": "string",
+            "title": "The Name Schema ",
+            "default": "",
+            "examples": [
+              "package1"
+            ]
+          },
+          "initLocation": {
+            "$id": "/properties/packages/items/properties/initLocation",
+            "type": "string",
+            "title": "The Initlocation Schema ",
+            "default": "",
+            "examples": [
+              "lot0"
+            ]
+          },
+          "goalLocation": {
+            "$id": "/properties/packages/items/properties/goalLocation",
+            "type": "string",
+            "title": "The Goallocation Schema ",
+            "default": "",
+            "examples": [
+              "lot1"
+            ]
+          }
+        }
+      }
+    },
+    "paths": {
+      "$id": "/properties/paths",
+      "type": "array",
+      "items": {
+        "$id": "/properties/paths/items",
+        "type": "object",
+        "properties": {
+          "a": {
+            "$id": "/properties/paths/items/properties/a",
+            "type": "string",
+            "title": "The A Schema ",
+            "default": "",
+            "examples": [
+              "lot0"
+            ]
+          },
+          "b": {
+            "$id": "/properties/paths/items/properties/b",
+            "type": "string",
+            "title": "The B Schema ",
+            "default": "",
+            "examples": [
+              "bldg0"
+            ]
+          },
+          "timeToWalk": {
+            "$id": "/properties/paths/items/properties/timeToWalk",
+            "type": "integer",
+            "title": "The Timetowalk Schema ",
+            "default": 0,
+            "examples": [
+              43
+            ]
+          }
+        }
+      }
+    },
+    "links": {
+      "$id": "/properties/links",
+      "type": "array",
+      "items": {
+        "$id": "/properties/links/items",
+        "type": "object",
+        "properties": {
+          "a": {
+            "$id": "/properties/links/items/properties/a",
+            "type": "string",
+            "title": "The A Schema ",
+            "default": "",
+            "examples": [
+              "lot0"
+            ]
+          },
+          "b": {
+            "$id": "/properties/links/items/properties/b",
+            "type": "string",
+            "title": "The B Schema ",
+            "default": "",
+            "examples": [
+              "lot1"
+            ]
+          },
+          "timeToDrive": {
+            "$id": "/properties/links/items/properties/timeToDrive",
+            "type": "integer",
+            "title": "The Timetodrive Schema ",
+            "default": 0,
+            "examples": [
+              24
+            ]
+          }
+        }
+      }
+    }
+  }
+}
