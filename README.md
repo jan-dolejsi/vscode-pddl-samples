@@ -22,9 +22,11 @@ Now go back to the plan visualization and click on the action that is missing a 
 
 Fix the bug and re-run the test case - it should pass now.
 
+Export the plan to a `.plan` file keeping the proposed default name. Run Tasks > Run task... > validate (with report) and observe that a `.tex` file got created. Install [LaTeX Preview](https://marketplace.visualstudio.com/items?itemName=ajshort.latex-preview) extension to open the preview.
+
 ### Trucking
 
-This domain is interesting, because it generates a small search space and the planner does not run out of available memory even when you ask it to search for a more optimal plan (e.g. by using the `-n` flag in `popf`). 
+This domain is interesting, because it generates a small search space and the planner does not run out of available memory even when you ask it to search for a more optimal plan (e.g. by using the `-n` flag in `popf`).
 
 Open the PDDL files of one of the test case and pres `Alt + P`. When prompted, select _specific options..._ and then type `-n` as the command-line option (or equivalent in your planner).
 
@@ -39,4 +41,4 @@ This demonstrates a regression test suite.
 
 This domain demonstrates the problem file templating and a programatic generation of scalability test suite.
 
-Run the `generate_tests.py` script and refresh the _Test Explorer_. You will see a list of _Scalability tests_ for your planner. Run the suite to see how your planner struggles (or does not :-]). See how the _.json_ files are concise to capture the test case definitions. Check the logic in the _problem.pddl_ template.
+Run the `generate_tests.py` script (requires Python 3.5+ to be installed) and refresh the _Test Explorer_. You will see a list of _Scalability tests_ for your planner. Run the suite to see how your planner struggles (or does not :-]). See how the _.json_ files are concise to capture the test case definitions. Check the logic in the _problem.pddl_ template.
