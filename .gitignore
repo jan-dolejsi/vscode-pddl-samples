@@ -16,6 +16,5 @@ ENV/
 env.bak/
 venv.bak/
 
-# Generated files
-DriverLog/scalability.ptest.json
-DriverLog/pfile*.json
+# generated stuff
+coverage/
