@@ -12,6 +12,10 @@ Planning Domain Definition Language [PDDL](https://en.wikipedia.org/wiki/Plannin
 
 ## Samples
 
+### GettingStarted
+
+Start from empty files by using the domain and problem snippets.
+
 ### Airport
 
 This is a sample showing airport ground operations planning. It has an intentional bug. Can you find it?
@@ -42,3 +46,11 @@ This demonstrates a regression test suite.
 This domain demonstrates the problem file templating and a programatic generation of scalability test suite.
 
 Run the `generate_tests.py` script (requires Python 3.5+ to be installed) and refresh the _Test Explorer_. You will see a list of _Scalability tests_ for your planner. Run the suite to see how your planner struggles (or does not :-]). See how the _.json_ files are concise to capture the test case definitions. Check the logic in the _problem.pddl_ template.
+
+### Scripted Templating
+
+For any more advanced data transformation during the problem file generation, refer to the ScriptedTemplate sample. It shows how the same `problem.pddl` template may be populated by a static .json file, or, by contrast, the template may be populated using data dynamically queried/transformed by a custom Python script.
+The `transform.py` script takes the arguments supplied via the `.ptest.json` test case manifest (i.e. numbers 1, 2 and 3) and sums them up before outputting the result to the PDDL problem. The `transform.py` script (or for that matter any custom program you may write) takes the templated problem from its standard input stream and outputs the rendered template to the standard output. VS Code just orchestrates the data flow during PDDL domain authoring and testing.
+When such a solution is deployed (e.g. as a planning service), it is easy to wrap the `transform` function `transform.py` with a Python Flask service.
+
+This is an important pattern, which helps externalize calculations or decision making from the planning domain, when it is more efficient (or less complex) to perform it outside the planning problem. This helps making the planning process faster.

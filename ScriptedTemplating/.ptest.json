@@ -1,0 +1,39 @@
+{
+    "defaultDomain": "domain.pddl",
+    "defaultProblem": "problem.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {
+            "label": "Pump 1 liter (static JSON)",
+            "preProcess": {
+                "kind": "jinja2",
+                "data": "static.json"
+            },
+            "description": "Pumps one liter of a fluid - generated using a static json file."
+        },
+        {
+            "label": "Pump 1 liter",
+            "preProcess": {
+                "kind": "python",
+                "script": "transform.py",
+                "args": [
+                    "1"
+                ]
+            },
+            "description": "Pumps one liter of a fluid."
+        },
+        {
+            "label": "Pump 1+2+3=6 liters",
+            "preProcess": {
+                "kind": "python",
+                "script": "transform.py",
+                "args": [
+                    "1",
+                    "2",
+                    "3"
+                ]
+            },
+            "description": "Sums requested amounts of fluid and pumps them all."
+        }
+    ]
+}
