@@ -45,7 +45,7 @@
 	:effect (and 
 		(at start (used ?t))
 		; when following line is uncommented, the planner will decide to re-fuel as late as possible
-		(decrease (capacity ?g) (* #t 0.5))
+		; (decrease (capacity ?g) (* #t 0.5))
   	    (decrease (fuel-reserve ?t) (* #t (refuel-rate ?g)))
 	    (increase (fuel-level ?g) (* #t (refuel-rate ?g)))
 	)

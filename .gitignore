@@ -18,3 +18,7 @@ venv.bak/
 
 # generated stuff
 coverage/
+
+# log files
+Generator/logs/**
+ScriptedTemplating/logs/*

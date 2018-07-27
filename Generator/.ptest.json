@@ -1,0 +1,9 @@
+{
+    "defaultDomain": "gen.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {
+            "problem": "genprob.pddl"
+        }
+    ]
+}
