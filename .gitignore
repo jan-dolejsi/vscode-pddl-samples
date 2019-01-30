@@ -20,5 +20,4 @@ venv.bak/
 coverage/
 
 # log files
-Generator/logs/**
-ScriptedTemplating/logs/*
+logs/

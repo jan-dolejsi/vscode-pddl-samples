@@ -1,7 +1,7 @@
 
 ;; This is the 4-action blocks world domain which does not refer to a table object and distinguishes actions for moving blocks to-from blocks and moving blocks to-from table
 
-(define (domain blocks)
+(define (domain blocksworld)
 
 (:requirements :typing :fluents
 :negative-preconditions)
@@ -39,21 +39,17 @@
 			 (not (clear ?x))
 			 (clear ?y)
 			 (not (on ?x ?y))
-			
 		)
 )
 
 (:action putdown
 :parameters (?x - block)
 :precondition (and (holding ?x)
-				
 			)
 :effect (and (ontable ?x)
 			 (not (holding ?x))
 			 (handempty)
 			 (clear ?x)
-			 
-			 
 		)
 )
 
@@ -67,8 +63,6 @@
 			 (handempty)
 			 (not (clear ?y))
 			 (clear ?x)
-			
-			 
 		)
 )
 
