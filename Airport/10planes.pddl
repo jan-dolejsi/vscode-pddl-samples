@@ -1,7 +1,7 @@
 ; 10 planes problem file
 
 (define (problem _10_planes) (:domain airport-ground-operations)
-(:objects 
+(:objects
     rw1 - runway
     p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 - plane
     g1 g2 g3 g4 g5 - gate
@@ -46,52 +46,52 @@
 
     (at 15 (final-approach p3))
     (needs-disembarking p3)
-    ; try removing (needs-cleaning) and adding (clean) 
+    ; try removing (needs-cleaning) and adding (clean)
     ; (clean p3) ; Easyjet does not pay for ground staff cleaning
-    (needs-cleaning p3) 
+    (needs-cleaning p3)
     (= (fuel-needed p3) 1234) ; [gal]
     (cleared-for-take-off p3)
 
     (at 20 (final-approach p4))
     (needs-disembarking p4)
-    (needs-cleaning p4) 
+    (needs-cleaning p4)
     (= (fuel-needed p4) 6789) ; [gal]
     (cleared-for-take-off p4)
     ; (at 90 (not (cleared-for-take-off p4)))
 
     (at 20 (final-approach p5))
     (needs-disembarking p5)
-    (needs-cleaning p5) 
+    (needs-cleaning p5)
     (= (fuel-needed p5) 1234) ; [gal]
     (cleared-for-take-off p5)
 
     (at 30 (final-approach p6))
     (needs-disembarking p6)
-    (needs-cleaning p6) 
+    (needs-cleaning p6)
     (= (fuel-needed p6) 2345) ; [gal]
     (cleared-for-take-off p6)
 
     (at 35 (final-approach p7))
     (needs-disembarking p7)
-    (needs-cleaning p7) 
+    (needs-cleaning p7)
     (= (fuel-needed p7) 3456) ; [gal]
     (cleared-for-take-off p7)
 
     (at 40 (final-approach p8))
     (needs-disembarking p8)
-    (needs-cleaning p8) 
+    (needs-cleaning p8)
     (= (fuel-needed p8) 1234) ; [gal]
     (cleared-for-take-off p8)
 
     (at 45 (final-approach p9))
     (needs-disembarking p9)
-    (needs-cleaning p9) 
+    (needs-cleaning p9)
     (= (fuel-needed p9) 1234) ; [gal]
     (cleared-for-take-off p9)
 
     (at 50 (final-approach p10))
     (needs-disembarking p10)
-    (needs-cleaning p10) 
+    (needs-cleaning p10)
     (= (fuel-needed p10) 1234) ; [gal]
     (cleared-for-take-off p10)
 

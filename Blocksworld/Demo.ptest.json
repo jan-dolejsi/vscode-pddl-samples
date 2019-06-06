@@ -1,0 +1,9 @@
+{
+    "defaultDomain": "blocksworld.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {
+            "problem": "demo.pddl"
+        }
+    ]
+}

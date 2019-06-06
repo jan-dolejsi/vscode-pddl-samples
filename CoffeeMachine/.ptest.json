@@ -1,0 +1,9 @@
+{
+    "defaultDomain": "domain.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {"problem": "problem_boil_water.pddl"},
+        {"problem": "problem_pour.pddl"},
+        {"problem": "problem_boil_and_pour1.pddl"}
+    ]
+}
