@@ -20,6 +20,33 @@
             },
             "command": "${config:pddl.validatorPath} -f \"${fileBasenameNoExtension}\" -v -t ${config:pddlPlanner.epsilonTimeStep} domain.pddl \"${fileBasenameNoExtension}.pddl\" \"${fileBasename}\"",
             "problemMatcher": []
+        },
+        {
+            "label": "plan-to-valstep",
+            "type": "shell",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "command": "PlantoVALStep ${file} > ${fileBasenameNoExtension}.valsteps",
+            "problemMatcher": []
+        },
+        {
+            "label": "valstep",
+            "type": "shell",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "command": "type ${file} | valstep domain.pddl ${fileBasenameNoExtension}.pddl",
+            "problemMatcher": []
+        },
+        {
+            "label": "valstep (interactive)",
+            "type": "shell",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "command": "valstep domain.pddl ${fileBasenameNoExtension}.pddl",
+            "problemMatcher": []
         }
     ]
 }

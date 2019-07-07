@@ -1,9 +1,10 @@
 ;; This is the template for problem files for the 4-action blocks world model.
+;;!pre-parsing:{type: "nunjucks", data: "p0.json"}
 
 
 (define (problem {{data.name}})
-(:domain blocks)
-  
+(:domain blocksworld)
+
 (:objects
 {% if data.blocks|length > 0 %}
 	{{ data.blocks|join(' ')}} - block
