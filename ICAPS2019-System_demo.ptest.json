@@ -1,0 +1,26 @@
+{
+    "defaultOptions": "",
+    "cases": [
+        {   
+            "label": "1. Find the missing action",
+            "domain": "Airport/domain.pddl",
+            "problem": "Airport/1plane.pddl",
+            "expectedPlans": [
+                "Airport/1plane-expected.plan"
+            ]
+        },
+        {   
+            "label": "2. Just-in-time re-fuel, but why does it run so slow now?!",
+            "description": "Re-fuelling and pushing back are 'clipped' together by an extra action.",
+            "domain": "Airport/domain_tightened.pddl",
+            "problem": "Airport/10planes.pddl",
+            "options": "--enable-steepest-ascent --debug=StopWhenHeuristic(200)"
+        },
+        {   
+            "label": "3 Find where the search is wasting time!",
+            "domain": "Airport/domain_tightened.pddl",
+            "problem": "Airport/3planes_2gates.pddl",
+            "options": "--search-strategy=BFS"
+        }
+    ]
+}

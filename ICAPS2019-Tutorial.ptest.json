@@ -1,0 +1,49 @@
+{
+    "defaultOptions": "",
+    "cases": [
+        {
+            "label": "1. Generating multiple plans",
+            "description": "When the planner produces multiple plans, you get to select which one you want to see.",
+            "domain": "Trucking/trucks.pddl",
+            "problem": "Trucking/drivingProbB.pddl",
+            "options": "--plan-count-limit=4"
+        },
+        {
+            "label": "2. Evaluating temporal/numeric plans",
+            "description": "PDDL 2.1 plans are far more difficult to comprehend.",
+            "domain": "CoffeeMachine/domain.pddl",
+            "problem": "CoffeeMachine/problem_boil_and_pour1.pddl"
+        },
+        {
+            "label": "3. Template-based problem generation",
+            "description": "Maintaining deployed PDDL models over time requires good test coverage - one problem file to test a planning and re-planning scenario. But the more test cases, the more expensive is every change to the domain. Try declaring the problem once in a general declarative way - aka a template - and populate it with test cases. You could deploy it and populate it with real world data.",
+            "domain": "DriverLog/domain.pddl",
+            "problem": "DriverLog/problem.pddl",
+            "preProcess": {
+                "kind": "nunjucks",
+                "data": "DriverLog/problem00.json"
+            }
+        },
+        {   
+            "label": "4. Find the missing action",
+            "domain": "Airport/domain.pddl",
+            "problem": "Airport/1plane.pddl",
+            "expectedPlans": [
+                "Airport/1plane-expected.plan"
+            ]
+        },
+        {   
+            "label": "5. Just-in-time re-fuel, but why does it run so slow now?!",
+            "description": "Re-fuelling and pushing back are 'clipped' together by an extra action.",
+            "domain": "Airport/domain_tightened.pddl",
+            "problem": "Airport/10planes.pddl",
+            "options": "--enable-steepest-ascent --debug=StopWhenHeuristic(200)"
+        },
+        {   
+            "label": "5.1 Find where the search is wasting time!",
+            "domain": "Airport/domain_tightened.pddl",
+            "problem": "Airport/3planes_2gates.pddl",
+            "options": "--search-strategy=BFS"
+        }
+    ]
+}

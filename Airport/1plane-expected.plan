@@ -1,17 +1,16 @@
 ;;!domain: airport-ground-operations
 ;;!problem: _1plane
 
-5.001: (land p1 rw1) [2]
-7.002: (taxi-to-gate p1 g1) [5]
-12.003: (re-fuel p1 ft1) [7.93125]
-12.003: (disembark p1) [7]
-19.004: (cleaning p1 cl1) [5]
-24.005: (boarding p1) [15]
-39.006: (push-back p1 g1) [3]
-42.007: (taxi-to-runway p1 rw1) [5]
-47.008: (_no-de-icing_needed p1 rw1)
-50.001: (take-off p1 rw1) [2]
+5.00100: (land p1 rw1) [2.00000]
+7.00200: (taxi-to-gate p1 g1) [5.00000]
+12.00300: (disembark p1) [7.00000]
+12.00300: (re-fuel p1 ft1) [7.93120]
+19.00400: (cleaning p1 cl1) [5.00000]
+24.00500: (boarding p1) [15.00000]
+39.00600: (push-back p1 g1) [3.00000]
+42.00700: (taxi-to-runway p1 rw1) [5.00000]
+47.00800: (_no-de-icing_needed p1 rw1)
+50.00100: (take-off p1 rw1) [2.00000]
 
 ; Makespan: 52.001
 ; Cost: 52.001
-; States evaluated: 15

@@ -9,11 +9,11 @@
 (:types block) ; we do not need a table type as we use a special ontable predicate
 
 (:predicates
-(on ?a ?b - block)
-(clear ?a - block)
-(holding ?a - block)
-(handempty)
-(ontable ?x - block)
+	(on ?a ?b - block)
+	(clear ?a - block)
+	(holding ?a - block)
+	(handempty)
+	(ontable ?x - block)
 )
 
 (:action pickup ; this action is only for picking from table

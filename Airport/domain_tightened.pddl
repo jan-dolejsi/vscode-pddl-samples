@@ -28,6 +28,9 @@
     (taken-off ?p - plane) ; plane took off
     (needs-disembarking ?p - plane)
     (needs-cleaning ?p - plane) ; Aircraft requires ground staff cleaning
+    (can-push-back ?p - plane ?g - gate)
+    (can-stop-refuel ?p - plane ?g - gate)
+    (re-fueling ?p - plane ?g - gate)
 
     ; runway properties
     (available_runway ?rw - runway) ; Runway is **operational** and **available**
@@ -172,9 +175,13 @@
             ; must not over-fill the fuel capacity
             (<= (fuel-plane-level) (fuel-plane-capacity))
         ))
+        (at end (and
+            (can-stop-refuel ?p ?g)
+        ))
     )
     :effect (and
         (at start (and
+            (re-fueling ?p ?g)
             (not (available_fuel-truck ?ft))
             (decrease (fuel-truck-level ?ft) (fuel-needed ?p)) ; was at the end
         ))
@@ -184,6 +191,29 @@
         ))
     )
 )
+
+(:durative-action re-fuel_push-back_clip
+    :parameters (?p - plane ?g - gate)
+    :duration (<= ?duration 0.01)
+    :condition (and 
+        (at start (and 
+            ; todo: check if re-fueling is ongoing (re-fueling ?p ?g)
+        ))
+        (at end (and 
+            (pushing-back ?p)
+        ))
+    )
+    :effect (and 
+        (at start (and 
+            (can-push-back ?p ?g)
+            (can-stop-refuel ?p ?g)
+        ))
+        (at end (and 
+            (not (can-push-back ?p ?g))
+        ))
+    )
+)
+
 
 ;; Re-fill the fuel truck
 (:durative-action re-fill-fuel-truck
@@ -211,6 +241,7 @@
     :duration (= ?duration 3)
     :condition (and
         (at start (and
+            (can-push-back ?p ?g)
             (at_plane_gate ?p ?g)
             (boarding-completed ?p ?g)
             ; the bug is right here!!! Missing condition: 
