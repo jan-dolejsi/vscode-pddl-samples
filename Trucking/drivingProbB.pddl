@@ -7,7 +7,6 @@
 )
 
 (:init
-	; (= (distanceTravelled bigRed) 0)
 	(road Houston Austin)
 	(road Austin ElPaso)
 	(at bigRed Houston)
