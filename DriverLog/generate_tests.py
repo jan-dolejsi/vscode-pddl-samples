@@ -43,25 +43,33 @@ def create_package(index: int, lots: List[str]) -> Dict[str, object]:
     }
 
 def create_paths(lots: List[str], buildings: List[str], p: ProblemDef) -> Dict[str, object]:
-    """ Creates a graph of paths and links between lots and buildings """
-    links = []
-
-    # add links betwen (parking) lots
-    for lot1 in lots:
-        for lot2 in lots:
-            links.append({
-                "a": lot1,
-                "b": lot2,
-                "timeToDrive": random.randint(0, p.max)
-            })
+    """ Creates a graph of paths between lots and buildings """
+    paths = []
 
     # add paths between some buildings and some lots
     for building in buildings:
         for lot in random.sample(lots, random.randint(1, len(lots))):
-            links.append({
+            paths.append({
                 "a": building,
                 "b": lot,
                 "timeToWalk": random.randint(0, p.max)
+            })
+
+    return paths
+
+def create_links(lots: List[str], p: ProblemDef) -> Dict[str, object]:
+    """ Creates a graph of road links between lots """
+    links = []
+
+    # add links betwen (parking) lots
+    for i1 in range(0, len(lots)):
+        lot1 = lots[i1]
+        for i2 in range(i1+1, len(lots)):
+            lot2 = lots[i2]
+            links.append({
+                "a": lot1,
+                "b": lot2,
+                "timeToDrive": random.randint(0, p.max)
             })
 
     return links
@@ -79,25 +87,27 @@ def generate_case(manifest: Dict[str,object], p: ProblemDef) -> None:
         "description": "locations: {}, drivers: {}, trucks: {}, packages: {}".format(p.locations, p.drivers, p.trucks, p.packages),
         "preProcess": {
             "kind": "nunjucks",
-            "data": file_name
+            "data": os.path.join("..", file_name)
         }
     }
 
-    lots = [f"lot{n}" for n in range(0, p.locations+1)]
-    buildings = ["bldg{}".format(n) for n in range(0, 2*(p.locations+1))]
-    drivers = [create_driver(n, buildings) for n in range(0, p.drivers+1)]
-    trucks = [create_truck(n, lots) for n in range(0, p.trucks+1)]
-    packages = [create_package(n, lots) for n in range(0, p.packages+1)]
+    lots = [f"lot{n}" for n in range(0, p.locations)]
+    buildings = ["bldg{}".format(n) for n in range(0, 2*(p.locations))]
+    drivers = [create_driver(n, buildings) for n in range(0, p.drivers)]
+    trucks = [create_truck(n, lots) for n in range(0, p.trucks)]
+    packages = [create_package(n, lots) for n in range(0, p.packages)]
     paths = create_paths(lots, buildings, p)
+    links = create_links(lots, p)
 
     problem = {
         "$schema": "./driverlog-schema.json",
-        "name": problem_name,
+        "name": "p" + problem_name,
         "locations": lots + buildings,
         "drivers": drivers,
         "trucks": trucks,
         "packages": packages,
-        "paths": paths
+        "paths": paths,
+        "links": links
     }
 
     manifest['cases'].append(case)
@@ -122,7 +132,14 @@ def main(args):
     for p in problem_defs:
         generate_case(manifest, p)
 
-    with open('Scalability.ptest.json', mode='w', encoding="utf-8") as fp:
+    ptestName = 'Scalability.ptest.json';
+
+    # generate scalability test cases for the 'numeric' domain encoding
+    with open(os.path.join('numeric', ptestName), mode='w', encoding="utf-8") as fp:
+        json.dump(manifest, fp, indent=4)
+
+    # generate scalability test cases for the 'numeric with object-fluents' domain encoding
+    with open(os.path.join('numeric_with_object-fluents', ptestName), mode='w', encoding="utf-8") as fp:
         json.dump(manifest, fp, indent=4)
 
 if __name__ == "__main__":

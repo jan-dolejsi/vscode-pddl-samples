@@ -21,3 +21,7 @@ coverage/
 
 # log files
 logs/
+
+# generated test cases
+DriverLog/pfile*.json
+DriverLog/**/Scalability.ptest.json

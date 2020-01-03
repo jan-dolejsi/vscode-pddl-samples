@@ -196,9 +196,9 @@
     :parameters (?p - plane ?g - gate)
     :duration (<= ?duration 0.01)
     :condition (and 
-        (at start (and 
+        ; (at start (and 
             ; todo: check if re-fueling is ongoing (re-fueling ?p ?g)
-        ))
+        ; ))
         (at end (and 
             (pushing-back ?p)
         ))

@@ -1,5 +1,5 @@
 (define (domain trucks)
-(:requirements :typing :fluents :durative-actions :duration-inequalities)
+(:requirements :typing :fluents :durative-actions :duration-inequalities :negative-preconditions)
 (:types vehicle location)
 (:predicates
 	(at ?x - vehicle ?y - location)
@@ -65,7 +65,9 @@
 	:parameters (?v - vehicle)
 	:precondition (and
 		(>= (distanceTravelled ?v) 10)
-		(<= (distanceTravelled ?v) 20))
+		(<= (distanceTravelled ?v) 20)
+		(not (refreshed ?v))
+	)
 	:effect
 		(refreshed ?v)
 	)

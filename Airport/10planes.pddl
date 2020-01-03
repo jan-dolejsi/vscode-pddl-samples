@@ -23,8 +23,9 @@
 
     (available_runway rw1)
     (available_cleaners cl1)
+    ; (available_cleaners cl2)
     ; Un-comment following lines to add a second crew, but for just limited time
-    ; (at 40 (available_cleaners cl2))
+    ; (at 20 (available_cleaners cl2))
     ; (at 90 (not (available_cleaners cl2)))
 
     (available_fuel-truck ft1)
@@ -51,6 +52,7 @@
     (needs-cleaning p3)
     (= (fuel-needed p3) 1234) ; [gal]
     (cleared-for-take-off p3)
+    ; (at 60 (not (cleared-for-take-off p3)))
 
     (at 20 (final-approach p4))
     (needs-disembarking p4)

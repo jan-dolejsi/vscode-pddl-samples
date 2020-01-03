@@ -8,7 +8,7 @@
             "description": "1 driver, 1 truck, 1 package",
             "preProcess": {
                 "kind": "nunjucks",
-                "data": "problem00.json"
+                "data": "../problem00.json"
             }
         }
     ]

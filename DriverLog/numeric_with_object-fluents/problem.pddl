@@ -1,5 +1,5 @@
 ; Templated driver log problem file
-;;!pre-parsing:{type: "nunjucks", data: "problem00.json"}
+;;!pre-parsing:{type: "nunjucks", data: "../problem00.json"}
  
 
 (define (problem {{data.name}})
@@ -14,13 +14,13 @@
 ;;( drivers
     {% for driver in data.drivers %}
     ; Driver: {{driver.name}}
-        (at {{driver.name}} {{driver.initLocation}})
+        (= (at_loc {{driver.name}}) {{driver.initLocation}})
     {% endfor %}
 ;;)
 ;;( trucks
     {% for truck in data.trucks %}
     ; Truck: {{truck.name}}
-        (at {{truck.name}} {{truck.initLocation}})
+        (= (at_loc {{truck.name}}) {{truck.initLocation}})
         {% if truck.empty %}
             (empty {{truck.name}})
         {% endif %}
@@ -28,8 +28,8 @@
 ;;)
 
 ;;( packages
-    {% for package in data.packages -%}
-        (at {{package.name}} {{package.initLocation}})
+    {% for package in data.packages %}
+        (= (at_loc {{package.name}}) {{package.initLocation}})
     {%- endfor %}
 ;;)
 
@@ -59,19 +59,19 @@
 (:goal (and
     {% for driver in data.drivers -%}
         {% if driver.goalLocation -%}
-            (at {{driver.name}} {{driver.goalLocation}})
+            (= (at_loc {{driver.name}}) {{driver.goalLocation}})
         {%- endif %}
     {%- endfor %}
 
     {% for truck in data.trucks -%}
         {% if truck.goalLocation -%}
-            (at {{truck.name}} {{truck.goalLocation}})
+            (= (at_loc {{truck.name}}) {{truck.goalLocation}})
         {%- endif %}
     {%- endfor %}
 
     {% for package in data.packages -%}
         {% if package.goalLocation -%}
-            (at {{package.name}} {{package.goalLocation}})
+            (= (at_loc {{package.name}}) {{package.goalLocation}})
         {%- endif %}
     {%- endfor %}
 

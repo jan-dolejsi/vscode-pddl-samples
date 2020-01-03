@@ -1,0 +1,15 @@
+{
+    "defaultDomain": "domain.pddl",
+    "defaultOptions": "",
+    "defaultProblem": "problem.pddl",
+    "cases": [
+        {
+            "label": "1-1-1",
+            "description": "1 driver, 1 truck, 1 package",
+            "preProcess": {
+                "kind": "nunjucks",
+                "data": "../problem00.json"
+            }
+        }
+    ]
+}
