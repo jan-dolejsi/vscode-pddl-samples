@@ -8,7 +8,6 @@ google.charts.load('current', {'packages':['gauge']});
  * @param {number} displayWidth desired width in pixels
  */
 function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
-  console.log(finalState);
   for (const v of finalState) {
     console.log(`${v.variableName}: ${v.value}`);
   }
@@ -23,7 +22,7 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
       / valueMap.get('cup-capacity')
       * 100]
   ]);
-
+  
   var options = {
     width: displayWidth, height: displayWidth,
     redFrom: 90, redTo: 100,
