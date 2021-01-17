@@ -42,14 +42,14 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
          paintBlock(blockName, blocksState, towerIndex, 0)
          let levelIndex = 1;
          while (!valueMap.get("clear " + blockName)) {
-            for (let specialKey of valueMap.keys())
-               if (specialKey.startsWith("on ") && specialKey.endsWith(blockName)) {
-                  let specialKeyName = specialKey
+            for (let key2 of valueMap.keys())
+               if (key2.startsWith("on ") && key2.endsWith(blockName)) {
+                  let otherBlockName = key2
                      .replace("on ", "")
                      .replace(blockName, "")
                      .replace(" ", "");
-                  paintBlock(specialKeyName, blocksState, towerIndex, levelIndex);
-                  blockName = specialKeyName;
+                  paintBlock(otherBlockName, blocksState, towerIndex, levelIndex);
+                  blockName = otherBlockName;
                   levelIndex += 1;
                }
          }
@@ -111,8 +111,9 @@ div.block {
     border-width: 1px;
     border-style: solid;
     position: absolute;
-    opacity: 0.5;
+    opacity: 0.75;
     text-align: center;
+    color: black;
 }
 div#blocksState {
     background-color: whitesmoke;
