@@ -2,7 +2,7 @@
  * Populates the `planVizDiv` element with the plan visualization of the `finalState`.
  * @param {HTMLDivElement} planVizDiv host element on the page
  * @param {Plan} plan plan to be visualized
- * @param {{variableValue: string, value: number | boolean}[]} finalState final state of the `plan`
+ * @param {{variableName: string, value: number | boolean}[]} finalState final state of the `plan`
  * @param {number} displayWidth desired width in pixels
  */
 function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
@@ -12,12 +12,24 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
 
    const valueMap = new Map(finalState.map(i => [i.variableName, i.value]));
 
+   // get all domain constants plus problem objects
+   const allObjects = plan.problem && plan.problem.getObjectsTypeMap()
+      && plan.domain && plan.domain.getConstants()
+      && plan.domain.getConstants().merge(plan.problem.getObjectsTypeMap());
+   
+   // get block names sorted lexicographically
+   /** @type {string[]} */
+   const blocks = allObjects ?
+      allObjects.getTypeCaseInsensitive("block").getObjects() :
+      [...new Set(plan.steps.map(s => s.getObjects()).reduce((prev, cur) => prev.concat(cur)))];
+
    const style = document.createElement("style");
    style.textContent = blocksCss.split(/[\r\n]/).join('');
    planVizDiv.appendChild(style);
 
    // todo: this should probably depend on the overall number of blocks
    const height = 250;
+   planVizDiv.style.height = `${height}px`;
 
    // create the blocksState host element
    const blocksState = document.createElement("div");
@@ -31,36 +43,20 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
    gripper.innerHTML = valueMap.get('handempty') ? gripperOpen : gripperClosed;
    blocksState.appendChild(gripper);
 
-   const onTableKeys = [...valueMap.keys()]
-      .filter(key => key.startsWith("ontable"))
-   console.log(onTableKeys);
+   const onTableBlocks = blocks
+      .filter(block => valueMap.get(`ontable ${block}`))
+      .sort();
 
-   let towerIndex = 0;
-   for (let key of valueMap.keys()) {
-      if (key.startsWith("ontable")) {
-         let blockName = key.replace("ontable ", "");
-         paintBlock(blockName, blocksState, towerIndex, 0)
-         let levelIndex = 1;
-         while (!valueMap.get("clear " + blockName)) {
-            for (let key2 of valueMap.keys())
-               if (key2.startsWith("on ") && key2.endsWith(blockName)) {
-                  let otherBlockName = key2
-                     .replace("on ", "")
-                     .replace(blockName, "")
-                     .replace(" ", "");
-                  paintBlock(otherBlockName, blocksState, towerIndex, levelIndex);
-                  blockName = otherBlockName;
-                  levelIndex += 1;
-               }
-         }
-         towerIndex += 1;
-      }
+   // paint all block towers one by one
+   for (let towerIndex = 0; towerIndex < onTableBlocks.length; towerIndex++) {
+      const blockName = onTableBlocks[towerIndex];
+      placeBlockIntoTower(blockName, blocksState, towerIndex, 0, [], valueMap);
    }
 
-   for (let key of valueMap.keys()){
-      if (key.startsWith("holding")){
-         let grippedBlockName = key.replace("holding ","");
-         paintGrippedBlock(grippedBlockName, blocksState);
+   // find the block that is being held by the gripper
+   for (const block of blocks){
+      if (valueMap.get(`holding ${block}`)) {
+         paintGrippedBlock(block, blocksState);
       }
    }
 }
@@ -79,6 +75,34 @@ function paintGrippedBlock(name, blocksState) {
    block.style.top = 50 + 'px';
    block.style.left = 25 + 'px';
    blocksState.appendChild(block);
+}
+
+/**
+ * Places block in tower and re-cursively continues upwards.
+ * @param {string} blockName block name / background color
+ * @param {HTMLDivElement} blocksState host element
+ * @param {number} tower index of the tower (0 is the first on the left)
+ * @param {number} level bottom-up level index (0 is on the bottom)
+ * @param {string[]} blocksInThisTower endless loop breaker to guard against invalid models
+ * @param {Map<string, number | boolean>} valueMap final state value map
+ */
+function placeBlockIntoTower(blockName, blocksState, tower, level, blocksInThisTower, valueMap) {
+   paintBlock(blockName, blocksState, tower, level);
+   blocksInThisTower = blocksInThisTower + [blockName];
+   if (!valueMap.get(`clear ${blockName}`)) {
+      for (let key of valueMap.keys()) {
+         const match = key.match(new RegExp("on ([-\\w]+) " + blockName))
+         if (match) console.log("match: " + match[1]);
+         if (key.startsWith("on ") && key.endsWith(blockName)) {
+            let otherBlockName = key.substring("on ".length, key.length - blockName.length - 1);
+            if (!blocksInThisTower.includes(otherBlockName)) {
+               placeBlockIntoTower(otherBlockName, blocksState, tower, level+1, blocksInThisTower, valueMap);
+            } else {
+               console.warn(`Block ${otherBlockName} is already in tower ${blocksInThisTower}. Skipping.`);
+            }
+         }
+      }
+   }
 }
 
 /**
