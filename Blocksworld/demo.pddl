@@ -20,5 +20,7 @@
 
 (:goal (and
     (on red brown)
+    (on green red)
+    (holding gold)
 ))
 )

@@ -1,6 +1,3 @@
-// This is a sample (static :-[) plan visualization.
-
-
 /**
  * Populates the `planVizDiv` element with the plan visualization of the `finalState`.
  * @param {HTMLDivElement} planVizDiv host element on the page
@@ -10,9 +7,9 @@
  */
 function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
    for (const v of finalState) {
-     console.log(`${v.variableName}: ${v.value}`);
+      console.log(`${v.variableName}: ${v.value}`);
    }
- 
+
    const valueMap = new Map(finalState.map(i => [i.variableName, i.value]));
 
    const style = document.createElement("style");
@@ -34,13 +31,38 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
    gripper.innerHTML = valueMap.get('handempty') ? gripperOpen : gripperClosed;
    blocksState.appendChild(gripper);
 
-   // mock display block held by the gripper:
-   paintGrippedBlock("blue", blocksState);
+   const onTableKeys = [...valueMap.keys()]
+      .filter(key => key.startsWith("ontable"))
+   console.log(onTableKeys);
 
-   // mock display green block on table
-   paintBlock("green", blocksState, /*tower*/3, /*level*/0);
-   // mock display red sitting on green
-   paintBlock("red", blocksState, /*tower*/3, /*level*/1);
+   let towerIndex = 0;
+   for (let key of valueMap.keys()) {
+      if (key.startsWith("ontable")) {
+         let blockName = key.replace("ontable ", "");
+         paintBlock(blockName, blocksState, towerIndex, 0)
+         let levelIndex = 1;
+         while (!valueMap.get("clear " + blockName)) {
+            for (let key2 of valueMap.keys())
+               if (key2.startsWith("on ") && key2.endsWith(blockName)) {
+                  let otherBlockName = key2
+                     .replace("on ", "")
+                     .replace(blockName, "")
+                     .replace(" ", "");
+                  paintBlock(otherBlockName, blocksState, towerIndex, levelIndex);
+                  blockName = otherBlockName;
+                  levelIndex += 1;
+               }
+         }
+         towerIndex += 1;
+      }
+   }
+
+   for (let key of valueMap.keys()){
+      if (key.startsWith("holding")){
+         let grippedBlockName = key.replace("holding ","");
+         paintGrippedBlock(grippedBlockName, blocksState);
+      }
+   }
 }
 
 /**
@@ -89,8 +111,9 @@ div.block {
     border-width: 1px;
     border-style: solid;
     position: absolute;
-    opacity: 0.5;
+    opacity: 0.75;
     text-align: center;
+    color: black;
 }
 div#blocksState {
     background-color: whitesmoke;
