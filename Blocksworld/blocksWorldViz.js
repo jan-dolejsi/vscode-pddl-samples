@@ -31,32 +31,32 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
    const height = 250;
    planVizDiv.style.height = `${height}px`;
 
-   // create the blocksState host element
-   const blocksState = document.createElement("div");
-   blocksState.id = "blocksState";
-   blocksState.style.height = `${height}px`;
-   blocksState.style.width = `${displayWidth}px`;
-   planVizDiv.appendChild(blocksState);
+   // create the host element
+   const canvas = document.createElement("div");
+   canvas.id = "blocksState";
+   canvas.style.height = `${height}px`;
+   canvas.style.width = `${displayWidth}px`;
+   planVizDiv.appendChild(canvas);
 
    // show the gripper:
    const gripper = document.createElement('div');
    gripper.innerHTML = valueMap.get('handempty') ? gripperOpen : gripperClosed;
-   blocksState.appendChild(gripper);
+   canvas.appendChild(gripper);
 
    const onTableBlocks = blocks
-      .filter(block => valueMap.get(`ontable ${block}`))
+      .filter(block => valueMap.get(`ontable ${block.toLowerCase()}`))
       .sort();
 
    // paint all block towers one by one
    for (let towerIndex = 0; towerIndex < onTableBlocks.length; towerIndex++) {
       const blockName = onTableBlocks[towerIndex];
-      placeBlockIntoTower(blockName, blocksState, towerIndex, 0, [], valueMap);
+      placeBlockIntoTower(blockName, canvas, towerIndex, 0, [], valueMap, blocks);
    }
 
    // find the block that is being held by the gripper
    for (const block of blocks){
-      if (valueMap.get(`holding ${block}`)) {
-         paintGrippedBlock(block, blocksState);
+      if (valueMap.get(`holding ${block.toLowerCase()}`)) {
+         paintGrippedBlock(block, canvas, blocks);
       }
    }
 }
@@ -64,39 +64,38 @@ function visualizeStateInDiv(planVizDiv, plan, finalState, displayWidth) {
 /**
  * Paints block being gripped by the robotic arm.
  * @param {string} name block name / background color
- * @param {HTMLDivElement} blocksState host element
+ * @param {HTMLDivElement} canvas host element
+ * @param {string[]} allBlocks all block names
  */
-function paintGrippedBlock(name, blocksState) {
+function paintGrippedBlock(name, canvas, allBlocks) {
    const block = document.createElement('div');
    block.className = "block";
    block.id = name;
-   block.style.background = name;
+   block.style.background =toColor(name, allBlocks);
    block.textContent = name;
    block.style.top = 50 + 'px';
-   block.style.left = 25 + 'px';
-   blocksState.appendChild(block);
+   block.style.left = 27 + 'px';
+   canvas.appendChild(block);
 }
 
 /**
  * Places block in tower and re-cursively continues upwards.
  * @param {string} blockName block name / background color
- * @param {HTMLDivElement} blocksState host element
+ * @param {HTMLDivElement} canvas host element
  * @param {number} tower index of the tower (0 is the first on the left)
  * @param {number} level bottom-up level index (0 is on the bottom)
  * @param {string[]} blocksInThisTower endless loop breaker to guard against invalid models
  * @param {Map<string, number | boolean>} valueMap final state value map
+ * @param {string[]} allBlocks all block names
  */
-function placeBlockIntoTower(blockName, blocksState, tower, level, blocksInThisTower, valueMap) {
-   paintBlock(blockName, blocksState, tower, level);
+function placeBlockIntoTower(blockName, canvas, tower, level, blocksInThisTower, valueMap, allBlocks) {
+   paintBlock(blockName, canvas, tower, level, allBlocks);
    blocksInThisTower = blocksInThisTower + [blockName];
-   if (!valueMap.get(`clear ${blockName}`)) {
-      for (let key of valueMap.keys()) {
-         const match = key.match(new RegExp("on ([-\\w]+) " + blockName))
-         if (match) console.log("match: " + match[1]);
-         if (key.startsWith("on ") && key.endsWith(blockName)) {
-            let otherBlockName = key.substring("on ".length, key.length - blockName.length - 1);
+   if (!valueMap.get(`clear ${blockName.toLowerCase()}`)) {
+      for (const otherBlockName of allBlocks) {
+         if (valueMap.get(`on ${otherBlockName.toLowerCase()} ${blockName.toLowerCase()}`)) {
             if (!blocksInThisTower.includes(otherBlockName)) {
-               placeBlockIntoTower(otherBlockName, blocksState, tower, level+1, blocksInThisTower, valueMap);
+               placeBlockIntoTower(otherBlockName, canvas, tower, level+1, blocksInThisTower, valueMap, allBlocks);
             } else {
                console.warn(`Block ${otherBlockName} is already in tower ${blocksInThisTower}. Skipping.`);
             }
@@ -108,19 +107,36 @@ function placeBlockIntoTower(blockName, blocksState, tower, level, blocksInThisT
 /**
  * Paints blocks sitting on the table or on another block.
  * @param {string} name block name / background color
- * @param {HTMLDivElement} blocksState host element
+ * @param {HTMLDivElement} canvas host element
  * @param {number} tower index of the tower (0 is the first on the left)
  * @param {number} level bottom-up level index (0 is on the bottom)
+ * @param {string[]} allBlocks all block names
  */
-function paintBlock(name, blocksState, tower, level) {
+function paintBlock(name, canvas, tower, level, allBlocks) {
    const block = document.createElement('div');
    block.className = "block";
    block.id = name;
-   block.style.background = name;
+   block.style.background = toColor(name, allBlocks);
    block.textContent = name;
    block.style.bottom = level * 50 + 1 + 'px';
    block.style.left = tower * 50 + 1 + 'px';
-   blocksState.appendChild(block);
+   canvas.appendChild(block);
+}
+
+/**
+ * Converts block name to color
+ * @param {string} name block name
+ * @param {string[]} allBlocks all block names
+ * @returns {string} css color name
+ */
+function toColor(name, allBlocks) {
+   if (COLORS.includes(name)) {
+      return name;
+   } else {
+      const index = allBlocks.findIndex(b => b === name);
+      console.log(index);
+      return COLORS[(3*index + 11) % COLORS.length];
+   }
 }
 
 module.exports = {
@@ -277,3 +293,68 @@ sodipodi:docname="gripper-opened.svg">
  </g>
 </g>
 </svg>`;
+
+const COLORS = ["Blue",
+   "BlueViolet",
+   "Brown",
+   "BurlyWood",
+   "CadetBlue",
+   "Chartreuse",
+   "Chocolate",
+   "Coral",
+   "CornflowerBlue",
+   "Crimson",
+   "Cyan",
+   "DeepPink",
+   "FireBrick",
+   "GhostWhite",
+   "Gold",
+   "GoldenRod",
+   "Gray",
+   "Green",
+   "GreenYellow",
+   "HotPink",
+   "IndianRed",
+   "Indigo",
+   "Ivory",
+   "Khaki",
+   "Lavender",
+   "Lime",
+   "LimeGreen",
+   "Linen",
+   "Magenta",
+   "Maroon",
+   "Navy",
+   "Olive",
+   "Orange",
+   "OrangeRed",
+   "Orchid",
+   "Peru",
+   "Pink",
+   "Plum",
+   "PowderBlue",
+   "Purple",
+   "Red",
+   "RosyBrown",
+   "RoyalBlue",
+   "SaddleBrown",
+   "Salmon",
+   "SandyBrown",
+   "SeaGreen",
+   "Sienna",
+   "Silver",
+   "SkyBlue",
+   "SpringGreen",
+   "SteelBlue",
+   "Tan",
+   "Teal",
+   "Thistle",
+   "Tomato",
+   "Turquoise",
+   "Violet",
+   "Wheat",
+   "White",
+   "WhiteSmoke",
+   "Yellow",
+   "YellowGreen"]
+   .map(c => c.toLowerCase());
