@@ -32,7 +32,7 @@
             (at start (imply (luxurious ?h) (experienced ?p)))
         )
         :effect (and
-            (at start (increase (cost) (paint_duration ?h ?l)))
+            (at start (increase (cost) (paint_duration ?h ?f)))
         )
     )
     (:job clean-up
