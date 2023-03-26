@@ -20,20 +20,20 @@
     (:predicates
         (luxurious ?h - house)
         (experienced ?p - painter)
-    )
+        )
 
     (:functions
         (cost)
-    )
+        )
 
     (:job paint
         :parameters (?h - house ?f - floor ?p - painter)
         :condition (and
             (at start (imply (luxurious ?h) (experienced ?p)))
-        )
+            )
         :effect (and
             (at start (increase (cost) (paint_job_duration ?h ?f)))
-        )
+            )
     )
     (:job clean-up
         :parameters (?h - house ?p - painter)
@@ -43,14 +43,7 @@
                     (paint_job_done ?h ?f)
                 )
             ))
+            )
         )
-        :effect (and 
-        )
+
     )
-)
-
-
-
-
-
-
