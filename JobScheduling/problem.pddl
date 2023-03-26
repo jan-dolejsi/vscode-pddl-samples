@@ -10,12 +10,16 @@
     ; red house
     (at 3 (is_available red))
     (at 13 (not (is_available red)))
-    (= (paint_duration red) 8)
+    (= (paint_job_duration red ground) 4)
+    (= (paint_job_duration red first) 4)
+    (= (clean-up_job_duration red) 1)
 
     ; blue house
     (is_available blue)
     (luxurious blue)
-    (= (paint_duration blue) 8)
+    (= (paint_job_duration blue ground) 4)
+    (= (paint_job_duration blue first) 4)
+    (= (clean-up_job_duration blue) 2)
 
     ; jay (inexperienced) painter
     (is_available jay)
@@ -26,15 +30,17 @@
     (experienced pro)
     (located_at pro pub)
 
-    (= (travel_time pub blue) 1)
-    (= (travel_time pub red) 3)
+    (= (travel_time pro pub blue) 1)
+    (= (travel_time pro pub red) 3)
+    (= (travel_time jay pub blue) 1)
+    (= (travel_time jay pub red) 3)
 
     (= (cost) 0)
 )
 
 (:goal (and
     (forall (?h - house)
-        (clean-_done ?h)
+        (clean-up_job_done ?h)
     )
 ))
 

@@ -4,7 +4,7 @@
 (define (domain job-scheduling-example)
 
     (:requirements 
-        :strips :fluents :durative-actions :typing :negative-preconditions 
+        :strips :fluents :durative-actions :typing :negative-preconditions :universal-preconditions :disjunctive-preconditions
         :job-scheduling)
 
     (:types
@@ -32,15 +32,15 @@
             (at start (imply (luxurious ?h) (experienced ?p)))
         )
         :effect (and
-            (at start (increase (cost) (paint_duration ?h ?f)))
+            (at start (increase (cost) (paint_job_duration ?h ?f)))
         )
     )
     (:job clean-up
         :parameters (?h - house ?p - painter)
         :condition (and 
             (at start (and 
-                (forall (?f -floor) 
-                    (paint_done ?h ?f)
+                (forall (?f - floor) 
+                    (paint_job_done ?h ?f)
                 )
             ))
         )
