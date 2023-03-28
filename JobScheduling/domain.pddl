@@ -6,6 +6,7 @@
     (:requirements 
         :strips :fluents :durative-actions :typing :negative-preconditions :universal-preconditions :disjunctive-preconditions
         :job-scheduling)
+    ; to activate the VS Code :job code injection, enable the "PDDL: Job Scheduling" setting in your VS Code Settings
 
     (:types
         house - location
@@ -20,6 +21,8 @@
     (:predicates
         (luxurious ?h - house)
         (experienced ?p - painter)
+        (had-coffee-with-owner ?h - house)
+        (is_above ?f1 ?f2 - floor)
         )
 
     (:functions
@@ -29,7 +32,10 @@
     (:job paint
         :parameters (?h - house ?f - floor ?p - painter)
         :condition (and
+            ; luxurious houses must be decorated by experienced painters
             (at start (imply (luxurious ?h) (experienced ?p)))
+            ; example of job predecessor/succcessor encoding: upper floors should be done first
+            (at start (forall (?f1 - floor) (imply (is_above ?f1 ?f) (paint_job_done ?h ?f1))))
             )
         :effect (and
             (at start (increase (cost) (paint_job_duration ?h ?f)))
@@ -45,5 +51,13 @@
             ))
             )
         )
+
+    (:durative-action coffee
+        :parameters (?h - house ?p - painter)
+        :duration (= ?duration 1)
+        :condition (and (at start (not (had-coffee-with-owner ?h))) (over all (not (busy ?p))) (over all (located_at ?p ?h)))
+        :effect (and (at end (had-coffee-with-owner ?h)))
+    )
+    
 
     )
