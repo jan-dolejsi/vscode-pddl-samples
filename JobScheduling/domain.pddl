@@ -1,12 +1,11 @@
 ; Job-scheduling experimental syntax sample
-; Note that the current version of VAL is not supporting this experimental syntax, so you will see validation errors
 
 (define (domain job-scheduling-example)
 
     (:requirements 
-        :strips :fluents :durative-actions :typing :negative-preconditions :universal-preconditions :disjunctive-preconditions
+        :universal-preconditions :disjunctive-preconditions
         :job-scheduling)
-    ; to activate the VS Code :job code injection, enable the "PDDL: Job Scheduling" setting in your VS Code Settings
+    ; to activate the VS Code :job-scheduling code injection, enable the "PDDL: Job Scheduling" setting in your VS Code Settings
 
     (:types
         house - location
@@ -58,6 +57,5 @@
         :condition (and (at start (not (had-coffee-with-owner ?h))) (over all (not (busy ?p))) (over all (located_at ?p ?h)))
         :effect (and (at end (had-coffee-with-owner ?h)))
     )
-    
 
     )
