@@ -3,7 +3,7 @@
 
 (define (domain blocksworld)
 
-(:requirements :typing :fluents
+(:requirements :typing
 :negative-preconditions)
 
 (:types block) ; we do not need a table type as we use a special ontable predicate
